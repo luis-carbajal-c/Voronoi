@@ -30,15 +30,14 @@ vector<Color> generate_colors(int n) {
         int c2 = rand() % (254) + 1;
         int c3 = rand() % (254) + 1;
         Color c(c1, c2, c3);
-        if(find(colors.begin(), colors.end(), c) == colors.end()) 
-            colors.push_back(c);
+        if(find(colors.begin(), colors.end(), c) == colors.end()) colors.push_back(c);
     }
     return colors;
 }
 
 void draw_points(cv::InputOutputArray& img, vector<Point> points) {
     for (auto p : points) {
-        cv::circle(img, p, 3, cv::Scalar(0,0,0), -1);
+        cv::circle(img, p, 3, {0,0,0}, -1);
     }
 }
 
@@ -51,7 +50,7 @@ void draw_voronoi(cv::Mat& img, vector<Point> points, vector<Color> colors, func
             double min_dist = DBL_MAX;
             int idx = 0;
             for(int p = 0; p < points.size(); p++) {
-                int curr_dist = dist_func(points[p], {i, j});
+                double curr_dist = dist_func(points[p], {i, j});
                 if (curr_dist < min_dist) {
                     min_dist = curr_dist;
                     idx = p;
